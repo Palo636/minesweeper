@@ -46,7 +46,7 @@ public class Field {
         Tile tile = tiles[row][column];
         if (tile.getState() == Tile.State.CLOSED) {
             tile.setState(Tile.State.OPEN);
-                openAdjacentTiles(row, column);
+            openAdjacentTiles(row, column);
             if (tile instanceof Mine) {
                 state = GameState.FAILED;
                 return;
@@ -141,7 +141,7 @@ public class Field {
         if (getTile(row, column).getState() == Tile.State.OPEN && (getTile(row, column) instanceof Clue && (((Clue) getTile(row, column)).getValue() == 0))) {
             for (int i = row - 1; i <= row + 1; i++) {
                 for (int j = column - 1; j <= column + 1; j++) {
-                    if (i+1 > getRowCount() || j+1 > getColumnCount() || i < 0 || j < 0) {
+                    if (i + 1 > getRowCount() || j + 1 > getColumnCount() || i < 0 || j < 0) {
 
                     } else {
                         openTile(i, j);
@@ -185,31 +185,21 @@ public class Field {
     }
 
     private int getNumberOf(Tile.State state) {
-        int open = 0;
-        int marked = 0;
-        int closed = 0;
+        int stateMines = 0;
 
         for (int i = 0; i < rowCount; i++) {
             for (int j = 0; j < columnCount; j++) {
-                if (getTile(i, j).getState() == Tile.State.OPEN) {
-                    open++;
-                }
-                if (getTile(i, j).getState() == Tile.State.CLOSED) {
-                    closed++;
-                }
-                if (getTile(i, j).getState() == Tile.State.MARKED) {
-                    marked++;
+                if (getTile(i, j).getState() == state) {
+                    stateMines++;
                 }
             }
         }
-        if (state.equals(Tile.State.CLOSED)) {
-            return closed;
-        }
-        if (state.equals(Tile.State.MARKED)) {
-            return marked;
-        } else
-            return open;
-
-
+        return stateMines;
     }
+
+    public int getRemainingMineCount() {
+        int count = getMineCount() - getNumberOf(Tile.State.MARKED);
+        return count;
+    }
+
 }
