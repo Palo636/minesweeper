@@ -1,5 +1,7 @@
 package minesweeper.consoleui;
 
+import minesweeper.BestTimes;
+import minesweeper.Minesweeper;
 import minesweeper.UserInterface;
 import minesweeper.core.*;
 
@@ -92,6 +94,7 @@ public class ConsoleUI implements UserInterface {
         }
 
         System.out.println("pocet zostavajucich min je: " + field.getRemainingMineCount());
+        System.out.println(Minesweeper.getInstance().getPlayingSeconds());
 
     }
 
